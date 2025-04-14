@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<robot name="simple_robot">
+  <!-- Base link -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.5 0.5 0.1"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.5 0.5 0.1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Wheel links -->
+  <link name="wheel_left">
+    <visual>
+      <geometry>
+        <cylinder radius="0.1" length="0.02"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.1" length="0.02"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="wheel_right">
+    <visual>
+      <geometry>
+        <cylinder radius="0.1" length="0.02"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.1" length="0.02"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joints -->
+  <joint name="base_to_wheel_left" type="revolute">
+    <parent link="base_link"/>
+    <child link="wheel_left"/>
+    <axis xyz="0 0 1"/>
+    <origin rpy="0 0 0" xyz="0.25 0.25 0"/>
+  </joint>
+
+  <joint name="base_to_wheel_right" type="revolute">
+    <parent link="base_link"/>
+    <child link="wheel_right"/>
+    <axis xyz="0 0 1"/>
+    <origin rpy="0 0 0" xyz="0.25 -0.25 0"/>
+  </joint>
+
+  <!-- Attach base to the world -->
+  <joint name="base_to_world" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin rpy="0 0 0
