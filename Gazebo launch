@@ -1,0 +1,35 @@
+import launch
+from launch import LaunchDescription
+from launch.actions import LogInfo, IncludeLaunchDescription
+from launch_ros.actions import Node
+import os
+from ament_index_python.packages import get_package_share_directory  # Import this line
+
+def generate_launch_description():
+    # Get the path to the gazebo_ros package's launch file
+    gazebo_launch_file = os.path.join(
+        get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py'
+    )
+
+    return LaunchDescription([
+        # Log info message
+        LogInfo(msg="Launching the robot in Gazebo"),
+
+        # Include the default Gazebo launch file from gazebo_ros
+        IncludeLaunchDescription(
+            gazebo_launch_file,  # Correctly passed as the source of the launch file
+            launch_arguments={},
+        ),
+
+        # Spawn the robot entity in Gazebo
+        Node(
+            package='gazebo_ros',
+            executable='spawn_entity.py',
+            name='spawn_robot',
+            output='screen',
+            arguments=[
+                '-file', '/home/saad/ros2g/src/line_control/urdf/robot.urdf',  # Corrected file path
+                '-entity', 'simple_robot'
+            ],
+        ),
+    ])
